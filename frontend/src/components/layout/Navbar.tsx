@@ -19,6 +19,7 @@ import {
   X,
   UserCheck,
 } from 'lucide-react';
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
 export function Navbar() {
   const pathname = usePathname();
@@ -77,7 +78,14 @@ export function Navbar() {
               boxShadow: '0 0 15px rgba(99, 102, 241, 0.4)',
             }}
           >
-            <ShieldCheck size={22} color="#ffffff" />
+            <OptimizedImage
+              src="/icon.svg"
+              alt="AI Data Access & Policy Auditor Logo"
+              width={24}
+              height={24}
+              priority
+              unoptimized
+            />
           </div>
           <div>
             <div

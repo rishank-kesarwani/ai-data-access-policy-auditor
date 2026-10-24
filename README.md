@@ -22,6 +22,7 @@
 10. [Deployment Guide](#10-deployment-guide)
     - [Render (Backend Web Service)](#render-backend-web-service)
     - [Vercel (Frontend Console)](#vercel-frontend-console)
+    - [Vercel Image Transformation Quota Strategy](#vercel-image-transformation-quota-strategy)
 11. [Local Development & Testing](#11-local-development--testing)
 12. [Walkthrough Scenarios & Smoke Test Checklist](#12-walkthrough-scenarios--smoke-test-checklist)
 13. [Troubleshooting & FAQ](#13-troubleshooting--faq)
@@ -298,6 +299,13 @@ Configured via `render.yaml`:
 5. **Environment Variables**:
    - `NEXT_PUBLIC_API_URL`: URL of the deployed Render backend (e.g. `https://ai-data-access-policy-auditor-backend.onrender.com/api/v1`)
    - `NEXT_PUBLIC_APP_NAME`: `AI Data Access & Policy Auditor`
+
+### Vercel Image Transformation Quota Strategy
+*See full guide: [IMAGE_OPTIMIZATION.md](IMAGE_OPTIMIZATION.md)*
+- **Transformation Quota Protection**: To avoid consuming Vercel's included 5,000 monthly image transformation quota, small icons, avatars ($\le$64px), and SVG graphics automatically bypass `/_next/image` using `unoptimized={true}`.
+- **Permanent Edge Caching**: Static assets, brand SVGs, and WebP/AVIF files are configured with `Cache-Control: public, max-age=31536000, immutable` in `frontend/vercel.json`.
+- **Pruned Breakpoints**: Next.js image configuration is trimmed from 8 device sizes down to 3 (`[640, 1080, 1920]`), saving 62.5% of transformation variants on responsive photography.
+- **Self-Healing Fallback**: All image rendering uses `<OptimizedImage>`, which intercepts Vercel 402/500 quota errors and automatically falls back to raw static assets without breaking the UI.
 
 ---
 
