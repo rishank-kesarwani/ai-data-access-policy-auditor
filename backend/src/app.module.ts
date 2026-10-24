@@ -14,6 +14,7 @@ import { AccessRequestModule } from './modules/access-request/access-request.mod
 import { AuditModule } from './modules/audit/audit.module';
 import { HealthModule } from './modules/health/health.module';
 import { SeedService } from './modules/storage/seed/seed.service';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { SeedService } from './modules/storage/seed/seed.service';
     AuditModule,
     HealthModule,
   ],
+  controllers: [AppController],
   providers: [
     SeedService,
     {

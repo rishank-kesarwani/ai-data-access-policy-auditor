@@ -43,10 +43,16 @@ export class HttpExceptionFilter implements ExceptionFilter {
     }
 
     // Log structured error without leaking secrets
-    this.logger.error(
-      `[${request.method}] ${request.url} - Status: ${status} - Error: ${message}`,
-      exception instanceof Error ? exception.stack : undefined,
-    );
+    if (status >= HttpStatus.INTERNAL_SERVER_ERROR) {
+      this.logger.error(
+        `[${request.method}] ${request.url} - Status: ${status} - Error: ${message}`,
+        exception instanceof Error ? exception.stack : undefined,
+      );
+    } else {
+      this.logger.warn(
+        `[${request.method}] ${request.url} - Status: ${status} - ${message}`,
+      );
+    }
 
     const safeBody = SanitizerUtil.redactSensitiveData({
       statusCode: status,

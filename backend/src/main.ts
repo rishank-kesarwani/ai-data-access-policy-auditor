@@ -30,9 +30,9 @@ async function bootstrap() {
     credentials: true,
   });
 
-  // Global prefix (excluding /health for Render health checks)
+  // Global prefix (excluding root discovery, health checks, and favicon)
   app.setGlobalPrefix(apiPrefix, {
-    exclude: ['health'],
+    exclude: ['', '/', 'health', 'favicon.ico'],
   });
 
   // Global validation pipe
